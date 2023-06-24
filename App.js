@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 export default function App() {
+  const [backgroundColor,setBackgroundColor] = useState("#ffffff");
   const [password, setPassword] = useState('')
   const [isPassGenerated, setIsPassGenerated] = useState(false)
 
@@ -64,8 +65,17 @@ export default function App() {
     setSymbols(false)
   }
 
+  const changeBgColor = () =>{
+    const hexColor = "0123456789ABCDEF";
+    let color = "#";
+    for(let i = 0; i<6; i++){
+      color += hexColor[Math.floor(Math.random() * 16)]
+    }
+    setBackgroundColor(color)
+  }
+
   return (
-    <ScrollView keyboardShouldPersistTaps="handled" >
+    <ScrollView keyboardShouldPersistTaps="handled" style={{backgroundColor:backgroundColor}} >
       <SafeAreaView style={styles.appContainer} >
         <View style={styles.formContainer}>
           <Text style={styles.title}>Password Generator</Text>
@@ -169,6 +179,9 @@ export default function App() {
           </View>
         ) : null}
       </SafeAreaView>
+      <TouchableOpacity style={[styles.primaryBtn,{alignSelf:"center"}]} onPress={changeBgColor} >
+          <Text style={styles.primaryBtnTxt}>Change BG Color</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 }
